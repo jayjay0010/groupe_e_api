@@ -54,7 +54,11 @@ sensor:
           {%- set vario_plus_attr = state_attr('sensor.vario_plus_tarif_projection', 'vario_plus_for_tomorrow') -%}
           {%- if vario_plus_attr is not none -%}
             {%- for item in vario_plus_attr -%}
-              {%- if item.start_timestamp == rounded_time.strftime('%Y-%m-%dT%H:%M:%S+01:00') -%}
+              {%- if item.start_timestamp == rounded_time.strftime('%Y-%m-%dT%H:%M:%S%:z') -%}
+                {# Traitement spécifique si format %:z #}
+                {{- item.vario_plus -}}
+              {%- elif item.start_timestamp == rounded_time.strftime('%Y-%m-%dT%H:%M:%S%z') -%}
+                {# Traitement spécifique si format %z #}
                 {{- item.vario_plus -}}
               {%- endif -%}
             {%- endfor -%}
@@ -84,7 +88,11 @@ sensor:
           {%- set dt_plus_attr = state_attr('sensor.dt_plus_tarif_projection', 'dt_plus_for_tomorrow') -%}
           {%- if dt_plus_attr is not none -%}
             {%- for item in dt_plus_attr -%}
-              {%- if item.start_timestamp == rounded_time.strftime('%Y-%m-%dT%H:%M:%S+01:00') -%}
+              {%- if item.start_timestamp == rounded_time.strftime('%Y-%m-%dT%H:%M:%S%:z') -%}
+                {# Traitement spécifique si format %:z #}
+                {{- item.dt_plus -}}
+              {%- elif item.start_timestamp == rounded_time.strftime('%Y-%m-%dT%H:%M:%S%z') -%}
+                {# Traitement spécifique si format %z #}
                 {{- item.dt_plus -}}
               {%- endif -%}
             {%- endfor -%}
